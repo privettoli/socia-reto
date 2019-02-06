@@ -1,4 +1,4 @@
-package org.theory.sociareto;
+package org.theory.socia.reto;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

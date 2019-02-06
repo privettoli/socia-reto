@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -32,8 +34,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "org.theory.sociareto"
+        applicationId "org.theory.socia.reto"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode flutterVersionCode.toInteger()
@@ -41,11 +42,22 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file(System.getenv()["FCI_KEYSTORE_PATH"])
+            storePassword System.getenv()["FCI_KEYSTORE_PASSWORD"]
+            keyAlias System.getenv()["FCI_KEY_ALIAS"]
+            keyPassword System.getenv()["FCI_KEY_PASSWORD"]
+        }
+    }
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+
+            minifyEnabled true
+            useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
